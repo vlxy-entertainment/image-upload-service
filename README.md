@@ -210,8 +210,14 @@ docker-compose logs -f
 # Stop services
 docker-compose down
 
-# Rebuild and restart
+# Rebuild and restart (when code changes)
 docker-compose up -d --build
+
+# Recreate container (when .env changes)
+docker-compose up -d --force-recreate
+
+# Rebuild and recreate (when both code and .env change)
+docker-compose up -d --build --force-recreate
 ```
 
 #### View logs

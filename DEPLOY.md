@@ -52,14 +52,17 @@ docker-compose down
 # View logs
 docker-compose logs -f
 
-# Restart services (use this after changing .env file)
-docker-compose restart
+# Recreate container after changing .env (recommended)
+docker-compose up -d --force-recreate
 
 # Or use the restart script
 ./restart.sh
 
-# Rebuild and restart (only needed when code changes)
-docker-compose up -d --build
+# Rebuild image and recreate container (only needed when code/Dockerfile changes)
+docker-compose up -d --build --force-recreate
+
+# Simple restart (may not pick up .env changes)
+docker-compose restart
 
 # Check container status
 docker-compose ps
@@ -70,34 +73,48 @@ docker-compose exec tiktok-upload-service sh
 
 ## Updating Environment Variables
 
-**Important**: After changing the `.env` file, you must restart the container for changes to take effect:
+**Important**: After changing the `.env` file, you must recreate the container for changes to take effect:
 
 ```bash
-# Option 1: Use the restart script (recommended)
+# Option 1: Use the restart script (recommended - forces recreation)
 ./restart.sh
 
-# Option 2: Manual restart
-docker-compose restart
+# Option 2: Force recreate container (recommended)
+docker-compose up -d --force-recreate
 
-# Option 3: Stop and start
+# Option 3: Stop and start (also recreates)
 docker-compose down
 docker-compose up -d
+
+# Option 4: Simple restart (may not always pick up .env changes)
+docker-compose restart
 ```
 
-**Note**: Changing `.env` does NOT require rebuilding the image. Only restart the container.
+**Note**: 
+- Changing `.env` does NOT require rebuilding the image (`--build` flag)
+- You MUST recreate the container (`--force-recreate` or `down` + `up`) to pick up new environment variables
+- `docker-compose restart` may not always reload environment variables - use `--force-recreate` instead
 
 ## Troubleshooting
 
 ### Environment variables not updating after changing .env
 
-**Solution**: Restart the container after changing `.env`:
+**Solution**: Recreate the container after changing `.env`:
 ```bash
-docker-compose restart
-# or
+# Force recreate (recommended)
+docker-compose up -d --force-recreate
+
+# Or use the restart script
 ./restart.sh
+
+# Or stop and start
+docker-compose down
+docker-compose up -d
 ```
 
-Docker containers don't automatically reload environment variables. You must restart the container for changes to take effect.
+**Why**: Docker Compose doesn't automatically recreate containers when only `.env` changes. The `--force-recreate` flag forces Docker to recreate the container with the new environment variables.
+
+**Note**: `docker-compose restart` may not always reload environment variables. Always use `--force-recreate` or `down` + `up` to ensure environment variables are reloaded.
 
 ### Container won't start
 ```bash

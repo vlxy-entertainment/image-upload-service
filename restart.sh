@@ -11,16 +11,17 @@ if [ ! -f .env ]; then
     exit 1
 fi
 
-# Restart the container to pick up new environment variables
-echo "📦 Restarting container..."
-docker-compose restart
+# Recreate the container to pick up new environment variables
+# This ensures environment variables are reloaded
+echo "📦 Recreating container with new environment variables..."
+docker-compose up -d --force-recreate
 
 # Wait a moment for container to start
 sleep 2
 
 # Check if container is running
 if docker ps | grep -q tiktok-upload-service; then
-    echo "✅ Container restarted successfully!"
+    echo "✅ Container recreated successfully!"
     echo ""
     echo "📊 View logs with: docker-compose logs -f"
     echo "🏥 Health check: curl http://localhost:3000/health"

@@ -12,8 +12,9 @@ A TypeScript Express server that handles TikTok image uploads with Supabase inte
 
 ## Prerequisites
 
-- Node.js >= 18.0.0
-- npm or pnpm
+- Node.js 24.10.0 (for local development)
+- npm or pnpm (for local development)
+- Docker and Docker Compose (for Docker deployment)
 - Supabase account with configured database
 
 ## Installation
@@ -144,39 +145,193 @@ tiktok-upload-service/
 ├── dist/                     # Compiled JavaScript (generated)
 ├── package.json              # Dependencies and scripts
 ├── tsconfig.json             # TypeScript configuration
-├── env.example               # Environment variables example
-└── README.md                 # This file
+├── Dockerfile                # Docker configuration
+├── docker-compose.yml        # Docker Compose configuration
+├── .dockerignore            # Docker ignore file
+├── env.example              # Environment variables example
+└── README.md                # This file
 ```
 
-## Deployment
+## Docker Deployment
 
-This is a standard Node.js application that can be deployed to any platform that supports Node.js:
+This project includes Docker configuration for easy deployment on any server with Docker installed.
+
+### Prerequisites for Docker
+
+- Docker >= 20.10
+- Docker Compose >= 2.0 (optional, for docker-compose)
+
+### Quick Start with Docker
+
+1. **Clone and navigate to the project**
+```bash
+git clone <your-repo-url>
+cd tiktok-upload-service
+```
+
+2. **Create `.env` file**
+```bash
+cp env.example .env
+# Edit .env with your actual values
+```
+
+3. **Build and run with Docker Compose**
+```bash
+docker-compose up -d
+```
+
+The service will be available at `http://localhost:3000`
+
+### Docker Commands
+
+#### Build the Docker image
+```bash
+docker build -t tiktok-upload-service .
+```
+
+#### Run the container
+```bash
+docker run -d \
+  --name tiktok-upload-service \
+  -p 3000:3000 \
+  --env-file .env \
+  --restart unless-stopped \
+  tiktok-upload-service
+```
+
+#### Using Docker Compose
+```bash
+# Start services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+
+# Rebuild and restart
+docker-compose up -d --build
+```
+
+#### View logs
+```bash
+# Docker Compose
+docker-compose logs -f
+
+# Docker
+docker logs -f tiktok-upload-service
+```
+
+#### Stop the container
+```bash
+# Docker Compose
+docker-compose down
+
+# Docker
+docker stop tiktok-upload-service
+docker rm tiktok-upload-service
+```
+
+### Docker Image Features
+
+- **Multi-stage build**: Optimized image size
+- **Non-root user**: Runs as `nodejs` user for security
+- **Health checks**: Built-in health check endpoint
+- **Production-ready**: Only production dependencies included
+- **Alpine Linux**: Lightweight base image
+
+### Environment Variables in Docker
+
+You can pass environment variables in several ways:
+
+1. **Using `.env` file** (recommended)
+```bash
+docker-compose up -d
+```
+
+2. **Using command line**
+```bash
+docker run -d \
+  -p 3000:3000 \
+  -e SUPABASE_URL=your_url \
+  -e SUPABASE_SERVICE_ROLE_KEY=your_key \
+  tiktok-upload-service
+```
+
+3. **Using environment file**
+```bash
+docker run -d \
+  -p 3000:3000 \
+  --env-file .env \
+  tiktok-upload-service
+```
+
+### Deploying on Ubuntu Server
+
+1. **Install Docker** (if not already installed)
+```bash
+# Update package index
+sudo apt-get update
+
+# Install Docker
+sudo apt-get install -y docker.io docker-compose
+
+# Start Docker service
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Add your user to docker group (optional, to run without sudo)
+sudo usermod -aG docker $USER
+```
+
+2. **Clone the repository**
+```bash
+git clone <your-repo-url>
+cd tiktok-upload-service
+```
+
+3. **Set up environment variables**
+```bash
+cp env.example .env
+nano .env  # Edit with your values
+```
+
+4. **Build and start**
+```bash
+docker-compose up -d --build
+```
+
+5. **Check status**
+```bash
+docker-compose ps
+docker-compose logs -f
+```
+
+6. **Test the service**
+```bash
+curl http://localhost:3000/health
+```
+
+### Production Deployment Tips
+
+- **Use a reverse proxy** (nginx/traefik) in front of the container
+- **Set up SSL/TLS** certificates (Let's Encrypt)
+- **Configure firewall** to only expose necessary ports
+- **Set up log rotation** for Docker logs
+- **Use Docker secrets** for sensitive data in production
+- **Monitor container health** using the `/health` endpoint
+
+### Other Deployment Options
+
+This is a standard Node.js application that can also be deployed to:
 
 - **Heroku**: Use the Node.js buildpack
 - **DigitalOcean App Platform**: Configure as a Node.js app
 - **AWS Elastic Beanstalk**: Deploy as a Node.js application
 - **Google Cloud Run**: Use the Node.js runtime
 - **Azure App Service**: Configure as a Node.js app
-- **Docker**: Create a Dockerfile and deploy to any container platform
 - **VPS**: Run directly on a virtual private server
-
-### Example Dockerfile
-
-```dockerfile
-FROM node:18-alpine
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci --only=production
-
-COPY . .
-RUN npm run build
-
-EXPOSE 3000
-
-CMD ["npm", "start"]
-```
 
 ## Troubleshooting
 

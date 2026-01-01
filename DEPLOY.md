@@ -52,10 +52,13 @@ docker-compose down
 # View logs
 docker-compose logs -f
 
-# Restart services
+# Restart services (use this after changing .env file)
 docker-compose restart
 
-# Rebuild and restart
+# Or use the restart script
+./restart.sh
+
+# Rebuild and restart (only needed when code changes)
 docker-compose up -d --build
 
 # Check container status
@@ -65,7 +68,36 @@ docker-compose ps
 docker-compose exec tiktok-upload-service sh
 ```
 
+## Updating Environment Variables
+
+**Important**: After changing the `.env` file, you must restart the container for changes to take effect:
+
+```bash
+# Option 1: Use the restart script (recommended)
+./restart.sh
+
+# Option 2: Manual restart
+docker-compose restart
+
+# Option 3: Stop and start
+docker-compose down
+docker-compose up -d
+```
+
+**Note**: Changing `.env` does NOT require rebuilding the image. Only restart the container.
+
 ## Troubleshooting
+
+### Environment variables not updating after changing .env
+
+**Solution**: Restart the container after changing `.env`:
+```bash
+docker-compose restart
+# or
+./restart.sh
+```
+
+Docker containers don't automatically reload environment variables. You must restart the container for changes to take effect.
 
 ### Container won't start
 ```bash
@@ -74,6 +106,9 @@ docker-compose logs
 
 # Check environment variables
 docker-compose config
+
+# Verify .env file exists and has correct values
+cat .env
 ```
 
 ### Port already in use

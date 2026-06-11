@@ -372,6 +372,32 @@ This is a standard Node.js application that can also be deployed to:
 - **Logs**: Check console output for detailed error messages
 - **Error Responses**: All errors include detailed information for debugging
 
+## Documentation
+
+Deeper docs live in [`docs/`](docs/):
+
+- [`docs/architecture.md`](docs/architecture.md) — what the service does, upload flow, data model, error contract
+- [`docs/features.md`](docs/features.md) — endpoints, account pooling, CORS, limits
+- [`docs/setup.md`](docs/setup.md) — env vars, local dev, Docker, the `.env` recreate gotcha
+- [`docs/conventions.md`](docs/conventions.md) — codebase conventions and structure
+
+## Known Issues / Tech Debt
+
+Documented for awareness (no behavior change):
+
+1. **Real-looking service-role key in `env.example`.** This file is tracked by git
+   and contains a genuine-looking `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY`. A
+   service-role key bypasses RLS — if real, rotate it in Supabase and replace with
+   placeholders. (`.env` itself is correctly gitignored.)
+2. **Orphaned compiled scripts.** `dist/scripts/export-videos.js` and
+   `migrate-titles.js` have no `src/` source; they are stale build artifacts from
+   the larger parent `tiktok-video` project, not part of this service.
+3. **Cooldown / rotation unimplemented.** `cooldown_until` and the `limited` /
+   `inactive` account statuses exist in the schema but are never read or written —
+   accounts are only balanced by `upload_count`.
+4. **Credentials echoed in error responses.** TikTok-failure responses include the
+   account's CSRF token and cookie in `requestDetails.headers`.
+
 ## License
 
 ISC

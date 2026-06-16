@@ -25,7 +25,7 @@ docker-compose up -d --build
 docker-compose logs -f
 
 # 5. Test health endpoint
-curl http://localhost:3000/health
+curl http://localhost:3003/health
 ```
 
 ## Environment Variables
@@ -34,7 +34,7 @@ Make sure your `.env` file contains:
 
 ```env
 NODE_ENV=production
-PORT=3000
+PORT=3003
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 CORS_ALLOWED_ORIGINS=https://your-frontend.com
@@ -132,7 +132,7 @@ cat .env
 ```bash
 # Change port in docker-compose.yml
 ports:
-  - "3001:3000"  # Use port 3001 instead
+  - "3001:3003"  # Use port 3001 instead
 ```
 
 ### Build fails
@@ -164,6 +164,6 @@ docker inspect --format='{{.State.Health.Status}}' tiktok-upload-service
 Or use the HTTP endpoint:
 
 ```bash
-curl http://localhost:3000/health
+curl http://localhost:3003/health
 ```
 

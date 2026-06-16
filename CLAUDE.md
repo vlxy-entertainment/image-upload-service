@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-tiktok-upload-service is the VLXY thumbnail upload proxy: a small Express + TypeScript service (Docker on port 3000) that re-hosts a single image to TikTok's CDN using a pool of `tiktok_accounts`. It is called over HTTP by torbox-app and video-manager (`POST /api/upload/tiktok`). Full system context: `../vlxy-docs/`.
+tiktok-upload-service is the VLXY thumbnail upload proxy: a small Express + TypeScript service (Docker on port 3003) that re-hosts a single image to TikTok's CDN using a pool of `tiktok_accounts`. It is called over HTTP by torbox-app and video-manager (`POST /api/upload/tiktok`). Full system context: `../vlxy-docs/`.
 
 ## Workflow
 

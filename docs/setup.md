@@ -18,7 +18,7 @@ if required vars are missing or malformed.
 |------------------------------|----------|---------------|-----------------------------------------|
 | `SUPABASE_URL`               | yes      | —             | must be a valid URL                     |
 | `SUPABASE_SERVICE_ROLE_KEY`  | yes      | —             | service role — bypasses RLS, keep secret |
-| `PORT`                       | no       | `3000`        | coerced to number                       |
+| `PORT`                       | no       | `3003`        | coerced to number                       |
 | `NODE_ENV`                   | no       | `development` | `development` \| `production` \| `test` |
 | `CORS_ALLOWED_ORIGINS`       | no       | —             | comma-separated; only enforced in production |
 
@@ -43,8 +43,8 @@ pnpm start              # node dist/index.js  (run build first)
 ### Smoke test
 
 ```bash
-curl http://localhost:3000/health
-curl -X POST http://localhost:3000/api/upload/tiktok -F "file=@test.png"
+curl http://localhost:3003/health
+curl -X POST http://localhost:3003/api/upload/tiktok -F "file=@test.png"
 ```
 
 ## Docker
@@ -57,7 +57,7 @@ installs prod-only deps, runs as a non-root `nodejs` user, and ships an HTTP
 cp env.example .env             # edit with real values
 docker-compose up -d --build    # build image + start
 docker-compose logs -f          # follow logs
-curl http://localhost:3000/health
+curl http://localhost:3003/health
 ```
 
 ### The `.env` gotcha (important)

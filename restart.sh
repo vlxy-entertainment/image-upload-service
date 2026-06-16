@@ -24,7 +24,7 @@ if docker ps | grep -q tiktok-upload-service; then
     echo "✅ Container recreated successfully!"
     echo ""
     echo "📊 View logs with: docker-compose logs -f"
-    echo "🏥 Health check: curl http://localhost:3000/health"
+    echo "🏥 Health check: curl http://localhost:3003/health"
 else
     echo "❌ Container failed to start. Check logs:"
     echo "   docker-compose logs"

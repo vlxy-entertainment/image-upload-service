@@ -44,10 +44,10 @@ Edit `.env` and add your configuration:
 
 ```env
 NODE_ENV=development
-PORT=3000
+PORT=3003
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
+CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,http://localhost:3002
 ```
 
 ## Environment Variables
@@ -56,7 +56,7 @@ CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
 |----------|-------------|----------|
 | `SUPABASE_URL` | Your Supabase project URL | Yes |
 | `SUPABASE_SERVICE_ROLE_KEY` | Your Supabase service role key | Yes |
-| `PORT` | Server port (default: 3000) | No |
+| `PORT` | Server port (default: 3003) | No |
 | `NODE_ENV` | Environment (development/production/test) | No |
 | `CORS_ALLOWED_ORIGINS` | Comma-separated list of allowed origins | No |
 
@@ -80,7 +80,7 @@ npm start
 ### Testing Upload
 ```bash
 curl -X POST \
-  http://localhost:3000/api/upload/tiktok \
+  http://localhost:3003/api/upload/tiktok \
   -F "file=@test.png"
 ```
 
@@ -180,7 +180,7 @@ cp env.example .env
 docker-compose up -d
 ```
 
-The service will be available at `http://localhost:3000`
+The service will be available at `http://localhost:3003`
 
 ### Docker Commands
 
@@ -193,7 +193,7 @@ docker build -t tiktok-upload-service .
 ```bash
 docker run -d \
   --name tiktok-upload-service \
-  -p 3000:3000 \
+  -p 3003:3003 \
   --env-file .env \
   --restart unless-stopped \
   tiktok-upload-service
@@ -259,7 +259,7 @@ docker-compose up -d
 2. **Using command line**
 ```bash
 docker run -d \
-  -p 3000:3000 \
+  -p 3003:3003 \
   -e SUPABASE_URL=your_url \
   -e SUPABASE_SERVICE_ROLE_KEY=your_key \
   tiktok-upload-service
@@ -268,7 +268,7 @@ docker run -d \
 3. **Using environment file**
 ```bash
 docker run -d \
-  -p 3000:3000 \
+  -p 3003:3003 \
   --env-file .env \
   tiktok-upload-service
 ```
@@ -316,7 +316,7 @@ docker-compose logs -f
 
 6. **Test the service**
 ```bash
-curl http://localhost:3000/health
+curl http://localhost:3003/health
 ```
 
 ### Production Deployment Tips

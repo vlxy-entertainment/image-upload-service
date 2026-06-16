@@ -23,7 +23,7 @@ The `/health` endpoint is also wired into the Docker `HEALTHCHECK`.
 
 Example:
 ```bash
-curl -X POST http://localhost:3000/api/upload/tiktok -F "file=@test.png"
+curl -X POST http://localhost:3003/api/upload/tiktok -F "file=@test.png"
 ```
 
 ## Account pooling & load balancing

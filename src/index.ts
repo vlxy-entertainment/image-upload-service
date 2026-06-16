@@ -22,9 +22,9 @@ const corsOptions = {
     
     // Default allowed origins
     const defaultOrigins = [
-      'http://localhost:3000',
-      'http://localhost:3001', 
-      'http://localhost:8080',
+      'http://localhost:3000', // video-streaming
+      'http://localhost:3001', // video-manager (browser caller)
+      'http://localhost:3002', // network-scraper
       'https://your-frontend-domain.com', // Replace with your actual frontend domain
     ];
     

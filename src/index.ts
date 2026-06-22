@@ -150,7 +150,6 @@ app.post('/api/upload/tiktok', upload.single('file'), async (req: Request, res: 
     // Prepare TikTok upload request
     const tiktokFormData = new FormData();
     tiktokFormData.append('file', new Blob([req.file.buffer], { type: req.file.mimetype }), req.file.originalname);
-    tiktokFormData.append('source', '0');
 
     // Prepare headers for TikTok API
     const headers: Record<string, string> = {

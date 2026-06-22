@@ -150,6 +150,10 @@ app.post('/api/upload/tiktok', upload.single('file'), async (req: Request, res: 
     // Prepare TikTok upload request
     const tiktokFormData = new FormData();
     tiktokFormData.append('file', new Blob([req.file.buffer], { type: req.file.mimetype }), req.file.originalname);
+    // source='0' routes the upload to TikTok's origin-preserving object store
+    // (without it TikTok re-encodes the image). Kept consistent with the worker's
+    // upload, which relies on this to preserve PNG-embedded HLS payloads.
+    tiktokFormData.append('source', '0');
 
     // Prepare headers for TikTok API
     const headers: Record<string, string> = {

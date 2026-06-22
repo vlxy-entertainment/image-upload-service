@@ -18,7 +18,7 @@ The `/health` endpoint is also wired into the Docker `HEALTHCHECK`.
 - **Constraints:** images only (`mimetype` must start with `image/`); max **10 MB**.
 - **Success response:**
   ```json
-  { "success": true, "url": "https://p16-sg.tiktokcdn.com/obj/...", "accountUsed": "account-name" }
+  { "success": true, "url": "https://p16-webcast.tiktokcdn.com/obj/...", "accountUsed": "account-name" }
   ```
 
 Example:

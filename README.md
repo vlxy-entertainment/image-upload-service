@@ -102,7 +102,7 @@ Body: FormData with 'file' field
 ```json
 {
   "success": true,
-  "url": "https://p16-sg.tiktokcdn.com/obj/...",
+  "url": "https://p16-webcast.tiktokcdn.com/obj/...",
   "accountUsed": "tiktok-account-name"
 }
 ```

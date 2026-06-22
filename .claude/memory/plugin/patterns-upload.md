@@ -16,7 +16,7 @@ Each upload queries `tiktok_accounts` for `status='active'` with non-null `csrft
 
 ## Uploads replay TikTok's INTERNAL browser API, not the official one
 
-The service POSTs to `https://www.tiktok.com/api/upload/image/` with `tt-csrf-token` header and `Cookie: tt_csrf_token=…; sid_guard=…`, plus a desktop-Chrome User-Agent and `Host: www.tiktok.com`. Success = `status_code === 0` with `data.uri`; the final URL is `https://p16-sg.tiktokcdn.com/obj/{uri}`. This is NOT TikTok's official Content Posting API.
+The service POSTs to `https://www.tiktok.com/api/upload/image/` with `tt-csrf-token` header and `Cookie: tt_csrf_token=…; sid_guard=…`, plus a desktop-Chrome User-Agent and `Host: www.tiktok.com`. Success = `status_code === 0` with `data.uri`; the final URL is `https://p16-webcast.tiktokcdn.com/obj/{uri}`. This is NOT TikTok's official Content Posting API.
 
 **Why:** It depends on stolen/borrowed browser session credentials per account and is inherently fragile — TikTok can change the endpoint, headers, or invalidate sessions at any time. Credentials (csrftoken, sid_guard_ads) must be harvested from a real session and kept fresh in the DB.
 

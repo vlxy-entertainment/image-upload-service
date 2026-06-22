@@ -243,7 +243,7 @@ app.post('/api/upload/tiktok', upload.single('file'), async (req: Request, res: 
         .eq('id', account.id);
 
       // Construct the final URL
-      const finalUrl = `https://p16-sg.tiktokcdn.com/obj/${result.data.uri}`;
+      const finalUrl = `https://p16-webcast.tiktokcdn.com/obj/${result.data.uri}`;
       console.log('Final URL:', finalUrl);
 
       return res.json({

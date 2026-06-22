@@ -33,7 +33,7 @@ and effectively one meaningful endpoint.
    it to the TikTok upload URL.
 4. **On success** (`status_code === 0` and `data.uri` present):
    - increment `upload_count`, set `last_upload_at` and `updated_at`
-   - construct the final URL: `https://p16-sg.tiktokcdn.com/obj/{data.uri}`
+   - construct the final URL: `https://p16-webcast.tiktokcdn.com/obj/{data.uri}`
    - return `{ success: true, url, accountUsed }`
 5. **On failure** — return a detailed error payload (see below).
 
@@ -66,7 +66,7 @@ ever queried; `limited`/`inactive` are never set by the service.
   its counters.
 - **TikTok internal API** — `https://www.tiktok.com/api/upload/image/`. Undocumented;
   authenticated by replaying browser session credentials. Fragile by nature.
-- **TikTok CDN** — final URLs are constructed against `p16-sg.tiktokcdn.com`.
+- **TikTok CDN** — final URLs are constructed against `p16-webcast.tiktokcdn.com`.
 
 ## Error-response contract
 
